@@ -1,3 +1,9 @@
+# Localized JSBin for Code On The Edge
+
+This fork of JSBin has changes to make it easier to run in the absence of a working Internet connection. Development so far has been somewhat haphazard. See [the build documentation](docs/running-your-own-jsbin.md)  for a tiny bit more detail on how to run this build yourself.
+
+---------------- 
+
 **IMPORTANT:** this current version of jsbin (v4.x.x) is no longer actively maintained and the new version of jsbin (v5) is currently in active development. This means that pretty much all the docs in this repo will be soon out of date. Please be warned ❤️
 
 ☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️☝️
