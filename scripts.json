@@ -19,6 +19,7 @@
     "/js/vendor/codemirror5/addon/hint/javascript-hint.js",
     "/js/vendor/codemirror5/addon/edit/matchbrackets.js",
     "/js/vendor/codemirror5/addon/comment/comment.js",
+    "/js/vendor/codemirror5/addon/edit/closetag.js",
     "/js/vendor/codemirror5/addon/lint/javascript-lint.js",
     "/js/vendor/codemirror5/addon/lint/lint.js",
     "/js/vendor/lz-string-1.3.3.js",

@@ -45,7 +45,7 @@ CodeMirror.commands.autocomplete = simpleJsHint;
 
 CodeMirror.commands.snippets = function (cm) {
   'use strict';
-  if (['htmlmixed', 'javascript', 'css', editorModes['less'], editorModes['sass'], editorModes['scss']].indexOf(cm.options.mode) === -1) {
+  if (['htmlmixed', 'javascript', 'css', editorModes.less, editorModes.sass, editorModes.scss].indexOf(cm.options.mode) === -1) {
     return CodeMirror.simpleHint(cm, CodeMirror.hint.anyword);
   } else if (oldCodeMirror) {
     return oldCodeMirror.snippets(cm);
@@ -76,7 +76,7 @@ var Panel = function (name, settings) {
   panel.el = document.getElementById(name);
   panel.order = ++Panel.order;
 
-  panel.label = (settings.label || name);
+  panel.label = settings.label || name;
 
   panel.$el.data('panel', panel);
 
@@ -101,7 +101,8 @@ var Panel = function (name, settings) {
       lineWrapping: false,
       // gutters: ['line-highlight'],
       theme: jsbin.settings.theme || 'jsbin',
-      highlightLine: true
+      highlightLine: true,
+      autoCloseTags: true
     };
 
     $.extend(cmSettings, jsbin.settings.editor || {});
@@ -122,6 +123,7 @@ var Panel = function (name, settings) {
       $.extend(cmSettings, {
         syntax: name, // define Zen Coding syntax
         profile: name, // define Zen Coding output profile
+        autoCloseTags: true //added 2019-02-05. Attempting to autoclose
       });
     }
 
@@ -164,7 +166,7 @@ var Panel = function (name, settings) {
       var cmd = $.browser.platform === 'mac' ? 'Cmd' : 'Ctrl';
       var map = {};
       map[cmd + '-D'] = 'deleteLine';
-      map[cmd + '-/'] = function(cm) { CodeMirror.commands.toggleComment(cm); };
+      map[cmd + '-/'] = function(cm) { CodeMirror.commands.toggleComment(cm) };
       map.name = 'noEmmet';
       panel.editor.addKeyMap(map);
     }
@@ -286,7 +288,7 @@ Panel.prototype = {
 
     // if the textarea is in focus AND we're mobile AND the keyboard is up
     if (jsbin.mobile && window.matchMedia && window.matchMedia('(max-height: 410px) and (max-width: 640px)').matches) {
-      if (panel.editor) panel.editor.focus();
+      if (panel.editor) {panel.editor.focus()}
     }
 
     if (jsbin.mobile) {
@@ -419,7 +421,7 @@ Panel.prototype = {
     $document.trigger('history:open');
   },
   toggle: function () {
-    (this)[this.visible ? 'hide' : 'show']();
+    this[this.visible ? 'hide' : 'show']();
   },
   getCode: function () {
     if (this.editor) {
@@ -461,7 +463,7 @@ Panel.prototype = {
     });
   },
   init: function () {
-    if (this.settings.init) this.settings.init.call(this);
+    if (this.settings.init) {this.settings.init.call(this)}
   },
   _setupEditor: function () {
     var focusedPanel = store.sessionStorage.getItem('panel') || jsbin.settings.focusedPanel,
@@ -526,12 +528,12 @@ Panel.prototype = {
         var height = panel.editor.scroller.closest('.panel').outerHeight();
         var offset = 0;
         $error = panel.$el.find('details');
-        offset += ($error.filter(':visible').height() || 0);
+        offset += $error.filter(':visible').height() || 0;
 
         if (!jsbin.lameEditor) {
           editor.scroller.height(height - offset);
         }
-        try { editor.refresh(); } catch (e) {}
+        try { editor.refresh() } catch (e) {}
 
         setTimeout(function () {
           $source[0].style.paddingLeft = '1px';
