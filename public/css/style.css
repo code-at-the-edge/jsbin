@@ -3788,7 +3788,7 @@ div.large-gravatar object {
 
 /* toppanel status */
 #toppanel {
-  height: 200px;
+  height: 120px;                /*200px*/
   background: rgb(236, 242, 250);
   position: relative;
   z-index: 100000;
@@ -3842,7 +3842,7 @@ body.ready.toppanel {
   vertical-align: top;
   max-width: 220px;
   width: 16.66%;
-  height: 179px;
+  height: 99px;  /* 179px; */
   overflow: hidden;
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
@@ -3855,6 +3855,12 @@ body.ready.toppanel {
 .toppanel-column:nth-child(3) {
   /* max-width: 180px; */
   /* margin-right: 10px; */
+}
+
+
+/* ad-hoc for a shorter toppanel */
+.toppanel-new {
+    padding-top: 20px;
 }
 
 .toppanel-stretch {
