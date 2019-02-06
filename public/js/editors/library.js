@@ -86,52 +86,61 @@ function insertResources(urls) {
       scriptDefaultAttrs = {},
       cssDefaultAttrs = { 'rel': 'stylesheet', 'type': 'text/css' };
 
-  for (i = 0; i < length; i++) {
-    url = urls[i];
+  for (i = 0; i < length; i++) 
+    {url = urls[i]}
 
-    // URLs can be objects carrying desired attributes
-    // The main resource (src, href) property is always 'url'
-    if ($.isPlainObject(url)) {
-      attrs = url;
-      url = url.url;
-      delete attrs.url;
-    } else {
-      attrs = {};
-    }
-
-    file = url.split('/').pop();
-
-    // Introduce any default attrs and flatten into a list for insertion
-    attrs = $.extend({}, (isCssFile(file) ? cssDefaultAttrs : scriptDefaultAttrs), attrs);
-    attrList = '';
-    for (var attr in attrs) {
-      attrList += ' ' + attr + '="' + attrs[attr] + '"';
-    }
-
-    if (file && code.indexOf(file + '"')) {
-      // attempt to lift out similar scripts
-      if (isCssFile(file)) {
-        code = code.replace(new RegExp('<link.*href=".*?/' + file + '".*?/>\n?'), '');
-      } else {
-        code = code.replace(new RegExp('<script.*src=".*?/' + file + '".*?><' + '/script>\n?'), '');
-      }
-      state.add--;
-    }
-
-    if (isCssFile(url)) {
-      resource = '<' + 'link href="' + url + '"' + attrList  + ' />';
-    } else {
-      resource = '<' + 'script src="' + url + '"' + attrList + '><' + '/script>';
-    }
-
-    if (isJadeActive()) {
-      resource = isCssFile(url) ? htmlLinkToJade(resource) : htmlScriptToJade(resource);
-    }
-
-    html.push(resource);
-
-    state.add++;
+  // URLs can be objects carrying desired attributes
+  // The main resource (src, href) property is always 'url'
+  if ($.isPlainObject(url)) {
+    attrs = url;
+    url = url.url;
+    delete attrs.url;
+  } else {
+    attrs = {};
   }
+
+  file = url.split('/').pop();
+
+  // Introduce any default attrs and flatten into a list for insertion
+  attrs = $.extend({}, isCssFile(file) ? cssDefaultAttrs : scriptDefaultAttrs, attrs);
+  attrList = '';
+  for (var attr in attrs) {
+    attrList += ' ' + attr + '="' + attrs[attr] + '"';
+  }
+
+  if (file && code.indexOf(file + '"')) {
+    // attempt to lift out similar scripts
+    if (isCssFile(file)) {
+      code = code.replace(new RegExp('<link.*href=".*?/' + file + '".*?/>\n?'), '');
+    } else {
+      code = code.replace(new RegExp('<script.*src=".*?/' + file + '".*?><' + '/script>\n?'), '');
+    }
+    state.add--;
+  }
+
+  if (isCssFile(url)) {
+    resource = '<' + 'link href="' + url + '"' + attrList  + ' />';
+  } else {
+    resource = '<' + 'script src="' + url + '"' + attrList + '><' + '/script>';
+  }
+
+  // alas, this is buggy; no access to node modules; also cant get access to offlinemode here, bummer.
+  // have to use bruteforce mode 
+  // if (jsbin.offlinemode) {
+  //       localpath = jsbin.static + path.join( 'offline/',  u.host, u.pathname);
+  //   localResource = resource.replace(url, localpath);
+  //   resource = '<!-- ' + resource + ' -->\n' + localResource + '<!-- replace local path with external path in other environments --> ';
+
+  // }
+
+  
+  if (isJadeActive()) {
+    resource = isCssFile(url) ? htmlLinkToJade(resource) : htmlScriptToJade(resource);
+  }
+
+  html.push(resource);
+
+  state.add++;
 
   if (isJadeActive()) {
     // always append Jade at the end, it's just easier that way...okay?
