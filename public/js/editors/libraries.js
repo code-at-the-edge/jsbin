@@ -1,7 +1,7 @@
 var libraries = [
   
   {
-    'url': 'https://unpkg.com/chota@latest',
+    'url': 'https://unpkg.com/chota.css',
     'label': 'Chota Latest',
     'group': 'Chota'
   },
@@ -714,7 +714,7 @@ var libraries = [
 
 var libraries = [
   {
-    'url': jsbin.static + '/unpkg.com/chota@latest',
+    'url': jsbin.static + '/offline/unpkg.com/chota.css',
     'label': 'Chota Latest',
     'group': 'Chota'
   },
