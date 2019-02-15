@@ -1,0 +1,17 @@
+[Unit]
+Description=JSBIN Code Playground Service
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+WorkingDirectory=~/html/jsbin
+Environment=NODE_VERSION=lts/carbon
+ExecStart=~/.nvm/nvmexec node .
+KillMode=control-group
+IgnoreSIGPIPE=false
+
+[Install]
+WantedBy=multi-user.target
